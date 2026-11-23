@@ -1,0 +1,21 @@
+name: kidos
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: kidos_admin
+      POSTGRES_PASSWORD: kidos_dev
+      POSTGRES_DB: kidos
+    ports:
+      - "5433:5432"
+    volumes:
+      - kidos_pgdata:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kidos_admin -d kidos"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+volumes:
+  kidos_pgdata:

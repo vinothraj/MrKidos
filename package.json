@@ -1,0 +1,46 @@
+{
+  "name": "kidos",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Community Experience & Commerce Network (working name)",
+  "type": "module",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "db:up": "docker compose -f infra/docker-compose.yml up -d --wait",
+    "db:down": "docker compose -f infra/docker-compose.yml down",
+    "db:migrate": "tsx packages/db/src/cli.ts migrate",
+    "typecheck": "tsc -p packages/db/tsconfig.json --noEmit && tsc -p apps/api/tsconfig.json --noEmit && tsc -p packages/ui/tsconfig.json --noEmit && tsc -p apps/web/tsconfig.json --noEmit && tsc -p tools/tsconfig.json --noEmit",
+    "dev:api": "tsx --env-file=.env watch apps/api/src/server.ts",
+    "dev:stack": "tsx tools/stack.ts dev",
+    "dev:web": "next dev apps/web -p 3000",
+    "e2e": "playwright test -c apps/web/playwright.config.ts",
+    "build:api": "node tools/build-api.mjs",
+    "build:web": "next build apps/web",
+    "drill:backup": "tsx tools/backup-drill.ts",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "check:load": "tsx tools/load-check.ts"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.65.1",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.13",
+    "@types/node": "^26.6.6",
+    "axe-core": "^4.14.1",
+    "embedded-postgres": "16.16.0-beta.19",
+    "eslint": "^10.15.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "jsdom": "^31.0.1",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.73.0",
+    "vitest": "^5.1.1"
+  }
+}

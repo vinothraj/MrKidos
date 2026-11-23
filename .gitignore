@@ -1,0 +1,18 @@
+node_modules/
+dist/
+coverage/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+.next/
+
+# Local development data (embedded PostgreSQL)
+.data/
+test-results/
+playwright-report/
+apps/api/dist/
+apps/api/migrations/
+
+.claude/settings.local.json
